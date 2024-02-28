@@ -1,10 +1,10 @@
-#include <GL/freeglut.h>
-#include <cstdlib>
-#include <ctime>
-#include <iostream>
 #include <cmath>
+#include <cstdlib>
+#include <GL/freeglut.h>
+#include <iostream>
 
 #include "spaceship.h"
+#include "utils.h"
 
 Spaceship *spaceship = (Spaceship *)malloc(sizeof(Spaceship));
 
@@ -12,7 +12,7 @@ void initSpaceship()
 {
     spaceship->cx = 0.0f;
     spaceship->cy = -300.0f + float(50 / (2 * sqrt(3)));
-    spaceship->length = 50;
+    spaceship->length = 125;
     spaceship->speed = 5;
     spaceship->health = 100.0f;
 }
@@ -43,22 +43,31 @@ Vertex topVertex()
 
 void drawSpaceship()
 {
+    GLuint texture;
+    generateTexture(&texture, "./assets/spaceship_texture.jpg");
+
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, texture);
+
     glBegin(GL_TRIANGLES);
-    glColor3f(1.0f, 0.0f, 0.0f);
 
     float leftX = leftVertex().x;
     float leftY = leftVertex().y;
+    glTexCoord2f(0.0f, 0.0f);
     glVertex2f(leftX, leftY);
 
     float rightX = rightVertex().x;
     float rightY = rightVertex().y;
+    glTexCoord2f(1.0f, 0.0f);
     glVertex2f(rightX, rightY);
 
     float topX = topVertex().x;
     float topY = topVertex().y;
+    glTexCoord2f(0.5f, 1.0f);
     glVertex2f(topX, topY);
 
     glEnd();
+    glDisable(GL_TEXTURE_2D);
 }
 
 void moveUp()
