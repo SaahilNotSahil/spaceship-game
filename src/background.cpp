@@ -32,7 +32,7 @@ void drawStars()
 void drawStar(int x, int y)
 {
     glColor3f(1.0, 1.0, 1.0);
-    glPointSize(5.0);
+    glPointSize(2.0);
     glBegin(GL_POINTS);
     glVertex2i(x, y);
     glEnd();
