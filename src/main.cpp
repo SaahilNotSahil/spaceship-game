@@ -126,30 +126,7 @@ void display()
 
 void timer(int)
 {
-    std::cout << game.state << std::endl;
-
-    if (game.state == WELCOME)
-    {
-        glutPostRedisplay();
-        glutTimerFunc(16, timer, 0);
-
-        return;
-    }
-    else if (game.state == PAUSED)
-    {
-        glutPostRedisplay();
-        glutTimerFunc(16, timer, 0);
-
-        return;
-    }
-    else if (game.state == END)
-    {
-        glutPostRedisplay();
-        glutTimerFunc(16, timer, 0);
-
-        return;
-    }
-    else if (game.state == GAMEOVER)
+    if (game.state != START)
     {
         glutPostRedisplay();
         glutTimerFunc(16, timer, 0);

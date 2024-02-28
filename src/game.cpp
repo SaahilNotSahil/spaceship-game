@@ -86,11 +86,13 @@ void Game::welcomeScreen()
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
     glRasterPos2f(-100.0f, 20.0f);
-    Write("Welcome to Spaceship Game!");
-    glRasterPos2f(-90.0f, -20.0f);
-    Write("Press 's' to start the game.");
-    glRasterPos2f(-90.0f, -60.0f);
-    Write("Press 'q' to quit the game.");
+    Write((char *)"Welcome to Spaceship Game!");
+    glRasterPos2f(-80.0f, -20.0f);
+    Write((char *)"Press 's' to start the game.");
+    glRasterPos2f(-120.0f, -60.0f);
+    Write((char *)"Press 'p' to pause/resume the game.");
+    glRasterPos2f(-80.0f, -100.0f);
+    Write((char *)"Press 'q' to quit the game.");
 }
 
 void Game::pausedScreen()
@@ -98,9 +100,9 @@ void Game::pausedScreen()
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
     glRasterPos2f(-50.0f, 20.0f);
-    Write("Game paused!");
+    Write((char *)"Game paused!");
     glRasterPos2f(-100.0f, -20.0f);
-    Write("Press 'p' to resume the game.");
+    Write((char *)"Press 'p' to resume the game.");
 }
 
 void Game::gameOverScreen(bool won)
@@ -111,28 +113,28 @@ void Game::gameOverScreen(bool won)
     if (won)
     {
         glRasterPos2f(-100.0f, 20.0f);
-        Write("Congratulations! You won!");
+        Write((char *)"Congratulations! You won!");
         char buffer[100];
         sprintf(buffer, "Score: %d", score);
         glRasterPos2f(-90.0f, -20.0f);
         Write(buffer);
         glRasterPos2f(-90.0f, -60.0f);
-        Write("Press 'r' to restart the game.");
+        Write((char *)"Press 'r' to restart the game.");
         glRasterPos2f(-90.0f, -100.0f);
-        Write("Press 'q' to quit the game.");
+        Write((char *)"Press 'q' to quit the game.");
     }
     else
     {
         glRasterPos2f(-100.0f, 20.0f);
-        Write("Game over! You lost all your health.");
+        Write((char *)"Game over! You lost all your health.");
         char buffer[100];
         sprintf(buffer, "Score: %d", score);
         glRasterPos2f(-90.0f, -20.0f);
         Write(buffer);
         glRasterPos2f(-90.0f, -60.0f);
-        Write("Press 'r' to restart the game.");
+        Write((char *)"Press 'r' to restart the game.");
         glRasterPos2f(-90.0f, -100.0f);
-        Write("Press 'q' to quit the game.");
+        Write((char *)"Press 'q' to quit the game.");
     }
 }
 
@@ -181,6 +183,10 @@ void Game::drawHealthIndicator()
     glVertex2f(left + healthWidth + 50, top - 125);
     glVertex2f(left + 50, top - 125);
     glEnd();
+
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+    glRasterPos2f(left + healthIndicatorWidth / 2.0f + 20, top - 147.5);
+    Write((char *)"HEALTH");
 }
 
 void Game::updateHealthIndicator()
