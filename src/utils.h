@@ -9,5 +9,6 @@ struct Vertex
 
 int randint(int min, int max);
 float euclidean_distance(Vertex v1, Vertex v2);
+void Write(char *string);
 
 #endif

@@ -2,6 +2,6 @@
 #define SPACESTATION_H
 
 void drawSpacestation();
-void updateSpacestation(int sweepCounter);
+void updateSpacestation();
 
 #endif

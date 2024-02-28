@@ -28,9 +28,9 @@ void drawSpacestation()
     glEnd();
 }
 
-void updateSpacestation(int sweepCounter)
+void updateSpacestation()
 {
-    if (leftVertex().y >= top - 100 && sweepCounter >= 10)
+    if (leftVertex().y >= top - 100 && game.sweepCounter >= game.maxSweeps)
     {
         std::cout << "You won!" << std::endl;
         std::cout << "Your score is " << game.score << std::endl;

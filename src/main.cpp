@@ -11,10 +11,6 @@
 #include "spaceship.h"
 #include "spacestation.h"
 
-int backgroundSweep = top;
-int sweepSpeed = 2;
-int sweepCounter = 0;
-
 bool upPressed = false;
 bool downPressed = false;
 bool leftPressed = false;
@@ -39,12 +35,7 @@ int main(int argc, char **argv)
     glutReshapeFunc(resize);
 
     init();
-
-    game.start();
-
-    initStars();
-    initAsteroids();
-    initSpaceship();
+    game.welcome();
 
     glutDisplayFunc(display);
     glutKeyboardFunc(handleKeyboardInput);
@@ -78,45 +69,114 @@ void display()
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
+    if (game.state == WELCOME)
+    {
+        game.welcomeScreen();
+
+        glutSwapBuffers();
+
+        return;
+    }
+    else if (game.state == PAUSED)
+    {
+        game.pausedScreen();
+
+        glutSwapBuffers();
+
+        return;
+    }
+    else if (game.state == END)
+    {
+        game.gameOverScreen(true);
+
+        glutSwapBuffers();
+
+        return;
+    }
+    else if (game.state == GAMEOVER)
+    {
+        game.gameOverScreen(false);
+
+        glutSwapBuffers();
+
+        return;
+    }
+
     drawStars();
     drawAsteroids(5);
     drawSpaceship();
-    game.drawProgressBar();
-    game.drawHealthIndicator();
 
-    if (sweepCounter >= 10)
+    char buffer[15];
+
+    sprintf(buffer, "Score: %d", game.score);
+
+    glRasterPos2f(left + 75, top - 175);
+    Write(buffer);
+
+    if (game.sweepCounter >= game.maxSweeps)
     {
         drawSpacestation();
     }
+
+    game.drawProgressBar();
+    game.drawHealthIndicator();
 
     glFlush();
 }
 
 void timer(int)
 {
-    backgroundSweep -= sweepSpeed;
+    std::cout << game.state << std::endl;
 
-    if (backgroundSweep < bottom)
+    if (game.state == WELCOME)
     {
-        backgroundSweep = top;
-        sweepCounter++;
+        glutPostRedisplay();
+        glutTimerFunc(16, timer, 0);
+
+        return;
+    }
+    else if (game.state == PAUSED)
+    {
+        glutPostRedisplay();
+        glutTimerFunc(16, timer, 0);
+
+        return;
+    }
+    else if (game.state == END)
+    {
+        glutPostRedisplay();
+        glutTimerFunc(16, timer, 0);
+
+        return;
+    }
+    else if (game.state == GAMEOVER)
+    {
+        glutPostRedisplay();
+        glutTimerFunc(16, timer, 0);
+
+        return;
+    }
+
+    game.backgroundSweep -= game.sweepSpeed;
+
+    if (game.backgroundSweep < bottom)
+    {
+        game.backgroundSweep = top;
+        game.sweepCounter++;
     }
 
     updateStars();
     updateAsteroids(5);
 
-    game.updateProgressBar(backgroundSweep, sweepCounter);
+    game.updateProgressBar();
     game.updateHealthIndicator();
-
-    updateSpacestation(sweepCounter);
 
     if (health() <= 0)
     {
-        std::cout << "GAME OVER" << std::endl;
-        std::cout << "SCORE: " << game.score << std::endl;
-
-        exit(1);
+        game.gameOver();
     }
+
+    updateSpacestation();
 
     if (upPressed && leftPressed)
     {
@@ -171,6 +231,32 @@ void handleKeyboardInput(unsigned char key, int x, int y)
     {
     case 'q':
         exit(0);
+
+        break;
+    case 's':
+        if (game.state == WELCOME)
+        {
+            game.start();
+        }
+
+        break;
+    case 'p':
+        if (game.state == START)
+        {
+            game.pause();
+        }
+        else if (game.state == PAUSED)
+        {
+            game.resume();
+        }
+
+        break;
+    case 'r':
+        if (game.state == END || game.state == GAMEOVER)
+        {
+            game.reset();
+        }
+
         break;
     }
 }
