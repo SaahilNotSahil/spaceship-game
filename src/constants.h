@@ -11,6 +11,6 @@
 
 #define numStars 100
 
-#define starSpeed 1
+#define starSpeed 2
 
 #endif
