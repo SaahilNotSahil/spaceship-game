@@ -34,5 +34,6 @@
 .vscode/
 
 bin/
+build/
 
 *.pdf
