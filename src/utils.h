@@ -1,10 +1,11 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-struct Vertex
-{
-    float x;
-    float y;
+#include <GL/freeglut.h>
+
+struct Vertex {
+  float x;
+  float y;
 };
 
 int randint(int min, int max);

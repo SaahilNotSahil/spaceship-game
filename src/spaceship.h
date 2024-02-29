@@ -3,13 +3,12 @@
 
 #include "utils.h"
 
-struct Spaceship
-{
-    float cx;
-    float cy;
-    int length;
-    int speed;
-    int health;
+struct Spaceship {
+  float cx;
+  float cy;
+  int length;
+  int speed;
+  int health;
 };
 
 Vertex leftVertex();

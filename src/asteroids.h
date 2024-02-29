@@ -5,16 +5,15 @@
 
 #define MAX_ASTEROIDS 15
 
-struct Asteroid
-{
-    float cx;
-    float cy;
-    int size;
-    int speed;
-    float m;
-    float c;
+struct Asteroid {
+  float cx;
+  float cy;
+  int size;
+  int speed;
+  float m;
+  float c;
 
-    Vertex vertices[7];
+  Vertex vertices[7];
 };
 
 void initAsteroids();
